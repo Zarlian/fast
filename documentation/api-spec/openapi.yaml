@@ -1,0 +1,893 @@
+openapi: 3.0.3
+info:
+  title: 'Adria Concept Title - Adria-04'
+  description: 'Description of the Adria API - Adria-04'
+  version: 0.0.1
+servers:
+  - url: https://project-2.ti.howest.be/2023-2024/group-04/
+    description: 'Public API'
+  - url: http://localhost:8080/
+    description: 'Local API'
+paths:
+  /api/user:
+    # DONE
+    get:
+      description: Get user data
+      tags:
+        - users
+      operationId: getUser
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+              examples:
+                user:
+                  summary: An example of the user
+                  value:
+                    name: Alice
+                    adriaId: 45
+                    location:
+                      lon: 50.58412
+                      lat: 2.354554
+
+  /api/users:
+    # DONE
+    get:
+      description: Get a list of all users
+      tags:
+        - users
+      operationId: getUsers
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+              examples:
+                users:
+                  summary: A example list of users
+                  value:
+                    - name: Alice
+                      adriaId: 45
+                      location:
+                        lon: 50.58412
+                        lat: 2.354554
+                    - name: Bob
+                      adriaId: 20
+                      location:
+                        lon: 50.58412
+                        lat: 2.354554
+
+  /api/group/add:
+    # DONE
+    post:
+      description: Create a group for a user from given id
+      tags:
+        - group
+      operationId: addGroup
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: "Family"
+                leader: 4
+                members: [5, 6]
+      responses:
+        '200':
+          description: Group is created for the user
+
+  /api/groups:
+    # DONE
+    get:
+      description: Get all the groups from given id
+      tags:
+        - group
+      operationId: getGroups
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: A list of groups from given id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/group'
+
+  /api/group/{groupId}:
+    # DONE
+    get:
+      description: Get group of a user from given id
+      tags:
+        - group
+      operationId: getGroup
+      security:
+        - bearer: []
+      parameters:
+        - in: path
+          name: groupId
+          required: true
+          schema:
+            type: integer
+          description: The group id
+      responses:
+        '200':
+          description: A group from the given id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/group'
+    # DONE
+    put:
+      description: Update the group name
+      tags:
+        - group
+      operationId: updateGroup
+      security:
+        - bearer: []
+      parameters:
+        - in: path
+          name: groupId
+          required: true
+          schema:
+            type: integer
+          description: The group ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+            example:
+              name: "Family"
+      responses:
+        '200':
+          description: The group is updated
+    # DONE
+    delete:
+      description: Delete give group
+      tags:
+        - group
+      operationId: deleteGroup
+      security:
+          - bearer: []
+      parameters:
+        - in: path
+          name: groupId
+          required: true
+          schema:
+            type: integer
+          description: The group Id
+          example: 55
+      responses:
+        '200':
+          description: Group is Deleted
+
+  /api/group/users/{groupId}:
+    # DONE
+    put:
+      description: Update the group members
+      tags:
+        - group
+      operationId: updateGroupMembers
+      security:
+          - bearer: []
+      parameters:
+        - in: path
+          name: groupId
+          required: true
+          schema:
+            type: integer
+          description: The group id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                IDs: [4, 5]
+      responses:
+        '200':
+          description: The group members are updated
+
+  /api/group/members:
+    #DONE
+    post:
+        description: Import a list of members to the friends
+        tags:
+            - group
+        operationId: importFriends
+        security:
+          - bearer: [ ]
+        responses:
+            '200':
+              description: The list of members is imported
+
+  /api/teleporters:
+    # DONE
+    get:
+      description: Get all the public teleporters
+      tags:
+        - teleporter
+      operationId: getTeleporters
+      security:
+        - bearer: [ ]
+      responses:
+        '200':
+          description: A list of all teleporters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/teleporter'
+              examples:
+                teleporters:
+                  summary: An example of the teleporters
+                  value:
+                    - id: 1
+                      address: "SomewhereStreet 500, Adria"
+                      location:
+                        lon: 50.58412
+                        lat: 2.354554
+                      type: "public"
+                      owner:
+                        name: Bob
+                        adriaId: 45
+                        address: "AnyWhereStreet 69, Adria"
+                        location:
+                          lon: 50.58412
+                          lat: 2.354554
+                    - id: 2
+                      address: "SomewhereStreet 500, Adria"
+                      location:
+                        lon: 50.58412
+                        lat: 2.354554
+                      type: "public"
+                      owner:
+                        name: Bob
+                        adriaId: 45
+                        address: "AnyWhereStreet 69, Adria"
+                        location:
+                          lon: 50.58412
+                          lat: 2.354554
+
+  /api/users/history:
+    # DONE
+    get:
+      description: Get all the trips from given user id
+      tags:
+        - user history
+      operationId: getUserHistory
+      security:
+        - bearer: [ ]
+      responses:
+        '200':
+          description: A list of all trips from given user id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trip'
+              examples:
+                trips:
+                  summary: An example of the trips
+                  value:
+                    - id: 1
+                      from:
+                        id: 1
+                        address: "SomewhereStreet 500, Adria"
+                        location:
+                          lon: 50.58412
+                          lat: 2.354554
+                        type: "public"
+                        owner:
+                          name: Bob
+                          adriaId: 45
+                          address: "AnyWhereStreet 69, Adria"
+                          location:
+                            lon: 50.58412
+                            lat: 2.354554
+                      to:
+                        id: 2
+                        address: "SomewhereStreet 500, Adria"
+                        location:
+                          lon: 50.58412
+                          lat: 2.354554
+                        type: "public"
+                        owner:
+                          name: Bob
+                          adriaId: 45
+                          address: "AnyWhereStreet 69, Adria"
+                          location:
+                            lon: 50.58412
+                            lat: 2.354554
+                      departure: "2021-10-12T07:20:50.52Z"
+                      arrival: "2021-10-12T07:20:50.52Z"
+                      user:
+                        name: Bob
+                        adriaId: 45
+                        address: "AnyWhereStreet 69, Adria"
+                        location:
+                          lon: 50.58412
+                          lat: 2.354554
+                      group:
+                        groupId: 9
+                        name: Family
+                        leader:
+                          name: Bob
+                          adriaId: 45
+                          address: "AnyWhereStreet 69, Adria"
+                          location:
+                            lon: 50.58412
+                            lat: 2.354554
+                        members:
+                          - name: Bob
+                            adriaId: 45
+                            address: "AnyWhereStreet 69, Adria"
+    # DONE
+    post:
+      description: Add a trip to the history
+      tags:
+        - user history
+      operationId: addTrip
+      security:
+        - bearer: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                from: 1
+                to: 2
+                departure: "2021-10-12T07:20:50.52Z"
+                arrival: "2021-10-12T07:20:50.52Z"
+                group: 9
+      responses:
+        '200':
+          description: Trip is added to the history of the user
+
+  /api/teleporters/history/{teleporterId}:
+    # DONE
+    get:
+      description: Get all the trips from a private teleporter of a user
+      tags:
+        - teleporter history
+      operationId: getTeleporterHistory
+      parameters:
+        - in: path
+          name: teleporterId
+          required: true
+          schema:
+              type: integer
+          description: Teleporter id
+      security:
+        - bearer: [ ]
+      responses:
+        '200':
+          description: A list of all trips from given teleporter id and user id
+          content:
+            application/json:
+              schema:
+                type: array
+              examples:
+                trips:
+                  summary: An example of the trips
+                  value:
+                    - arrival: "2021-10-12T07:20:50.52Z"
+                      user: Bob
+                      from: 1
+                      to: 2
+                    - arrival: "2021-10-12T07:20:50.52Z"
+                      user: Bob
+                      from: 1
+                      to: 2
+
+  /api/teleporters/settings/{teleporterId}:
+    # DONE
+    get:
+      description: Get all the private teleporter settings
+      tags:
+          - teleporter settings
+      operationId: getTeleporterSettings
+      security:
+        - bearer: [ ]
+      parameters:
+        - in: path
+          name: teleporterId
+          required: true
+          schema:
+            type: integer
+          description: Teleporter id
+      responses:
+        '200':
+          description: A list of all private teleporters of a user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/teleporterSetting'
+              examples:
+                teleporters:
+                  summary: An example of the teleporter settings
+                  value:
+                    id: 1
+                    visible: true
+    # DONE
+    put:
+      description: Update the visibility of a private teleporter
+      tags:
+        - teleporter settings
+      operationId: updateTeleporterSettings
+      security:
+        - bearer: [ ]
+      parameters:
+        - in: path
+          name: teleporterId
+          required: true
+          schema:
+            type: integer
+          description: Teleporter id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                  visible: true
+      responses:
+        '200':
+          description: Teleporter visibility is updated
+
+  /api/user/teleporters/permissions/{teleporterId}:
+    # DONE
+    get:
+      description: Get all the users and their permissions for a private teleporter
+      tags:
+        - teleporter permissions
+      operationId: getUserPermissions
+      security:
+        - bearer: [ ]
+      parameters:
+        - in: path
+          name: teleporterId
+          required: true
+          schema:
+            type: integer
+          description: Teleporter id
+      responses:
+        '200':
+          description: A list of all users that have access to the private teleporter
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                userPermissions:
+                  summary: An example of the user permissions
+                  value:
+                    - teleporter: 1
+                      can_access_all_logs: true
+                      can_assign_permissions: true
+                      can_control_teleporter: true
+                      can_manage_list: true
+                      user: 1
+                    - teleporter: 2
+                      can_access_all_logs: true
+                      can_assign_permissions: true
+                      can_control_teleporter: true
+                      can_manage_list: true
+                      user: 1
+    # DONE
+    put:
+      description: Add a user to the private teleporter
+      tags:
+        - teleporter permissions
+      operationId: updateUserPermissions
+      security:
+        - bearer: [ ]
+      parameters:
+        - in: path
+          name: teleporterId
+          required: true
+          schema:
+            type: integer
+          description: Teleporter id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/permission'
+      responses:
+        '200':
+          description: User is added to the private teleporter
+
+  /api/users/transactions:
+    # DONE
+    get:
+      description: Get all the tickets of a user
+      tags:
+        - user transactions
+      operationId: getUserTransactions
+      security:
+        - bearer: [ ]
+      responses:
+        '200':
+          description: A list of all tickets of a user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userTransaction'
+              examples:
+                tickets:
+                  summary: An example of the tickets
+                  value:
+                    - ticket:
+                        id: 1
+                        type: "public"
+                        price: 4,20
+                        max_trips: 10
+                        user:
+                          name: Bob
+                          adriaId: 45
+                          address: "AnyWhereStreet 69, Adria"
+                          location:
+                            lon: 50.58412
+                            lat: 2.354554
+                        trips_left: 10
+                    - ticket:
+                        id: 2
+                        type: "public"
+                        price: 4,20
+                        max_trips: 10
+                        user:
+                          name: Bob
+                          adriaId: 45
+                          address: "AnyWhereStreet 69, Adria"
+                          location:
+                            lon: 50.58412
+                            lat: 2.354554
+                        trips_left: 10
+
+  /api/users/favourites:
+    # DONE
+    get:
+      description: Get a list of your favourite teleporter locations
+      tags:
+        - favourites
+      operationId: getFavourites
+      security:
+        - bearer: [ ]
+      responses:
+        '200':
+          description: A list of your favourite teleporter locations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/favourite'
+              example:
+                - adriaId: 7
+                  teleporterId: 9
+                  type: "home"
+                  name: "Home"
+                - adriaId: 7
+                  teleporterId: 10
+                  type: "work"
+                  name: "Work"
+    # DONE
+    post:
+      description: Add a new favourite teleporter location
+      tags:
+        - favourites
+      operationId: addFavourite
+      security:
+        - bearer: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                teleporterId:
+                  type: integer
+                type:
+                  type: string
+                name:
+                  type: string
+            examples:
+              home:
+                value:
+                  teleporterId: 9
+                  type: "home"
+                  name: "Home"
+              work:
+                value:
+                  teleporterId: 10
+                  type: "work"
+                  name: "Work"
+      responses:
+        '200':
+          description: A new favourite teleporter location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/favourite'
+              example:
+                adriaId: 7
+                teleporterId: 9
+                type: "home"
+                name: "Home"
+
+  /api/users/favourites/{teleporterId}:
+    # DONE
+    put:
+      description: Change the name and icon of a favourite teleporter location
+      tags:
+        - favourites
+      operationId: updateFavourite
+      security:
+        - bearer: [ ]
+      parameters:
+        - in: path
+          name: teleporterId
+          required: true
+          schema:
+            type: integer
+          description: teleporter id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                name:
+                  type: string
+            examples:
+              home:
+                value:
+                  type: "home"
+                  name: "Home"
+              work:
+                value:
+                  type: "work"
+                  name: "Work"
+      responses:
+        '200':
+          description: A new favourite teleporter location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/favourite'
+              example:
+                adriaId: 7
+                teleporterId: 9
+                type: "home"
+                name: "Home"
+    # DONE
+    delete:
+      description: Delete a favourite teleporter location
+      tags:
+        - favourites
+      operationId: deleteFavourite
+      security:
+        - bearer: [ ]
+      parameters:
+        - in: path
+          name: teleporterId
+          required: true
+          schema:
+            type: integer
+          description: teleporter id
+      responses:
+        '200':
+          description: Favourite teleporter location is Deleted
+
+components:
+  schemas:
+    location:
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          example: 1
+        lon:
+          type: string
+          example: "50.533354"
+        lat:
+          type: string
+          example: "2.533354"
+    user:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Alice"
+        adriaId:
+          type: integer
+          minimum: 0
+          example: 7
+        address:
+          type: string
+          example: "SomewhereStreet 500, Adria"
+        location:
+          $ref: '#/components/schemas/location'
+      required:
+        - name
+        - id
+      example:
+        name: Alice
+        adriaId: 45
+        address: "SomewhereStreet 500, Adria"
+        location:
+          lon: 50.58412
+          lat: 2.354554
+    group:
+      type: object
+      properties:
+        groupId:
+          type: integer
+          minimum: 0
+          example: 9
+        leader:
+          $ref: '#/components/schemas/user'
+        name:
+          type: string
+          example: "Family"
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/user'
+    teleporter:
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          example: 1
+        address:
+          type: string
+          example: "SomewhereStreet 500, Adria"
+        location:
+          $ref: '#/components/schemas/location'
+        type:
+          type: string
+          example: "public"
+        owner:
+          $ref: '#/components/schemas/user'
+    trip:
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          example: 1
+        from:
+          $ref: '#/components/schemas/teleporter'
+        to:
+          $ref: '#/components/schemas/teleporter'
+        departure:
+          type: string
+          example: "2021-10-12T07:20:50.52Z"
+        arrival:
+          type: string
+          example: "2021-10-12T07:20:50.52Z"
+        user:
+          $ref: '#/components/schemas/user'
+        group:
+          $ref: '#/components/schemas/group'
+    teleporterSetting:
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          example: 1
+    permission:
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          example: 1
+        can_access_all_logs:
+          type: boolean
+          example: true
+        can_assign_permissions:
+          type: boolean
+          example: true
+        can_control_teleporter:
+          type: boolean
+          example: true
+        can_manage_list:
+          type: boolean
+          example: true
+    userPermission:
+      type: object
+      properties:
+        permission:
+          $ref: '#/components/schemas/permission'
+        user:
+          $ref: '#/components/schemas/user'
+    transaction:
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          example: 1
+        type:
+          type: string
+          example: "public"
+        price:
+          type: number
+          minimum: 0
+          example: 4,20
+        max_trips:
+          type: integer
+          minimum: 0
+          example: 10
+    userTransaction:
+      type: object
+      properties:
+        ticket:
+          $ref: '#/components/schemas/transaction'
+        user:
+          $ref: '#/components/schemas/user'
+        trips_left:
+          type: integer
+          minimum: 0
+          example: 10
+
+    favourite:
+      type: object
+      properties:
+        adriaId:
+          type: integer
+          minimum: 0
+          example: 7
+        teleporterId:
+          type: integer
+          minimum: 0
+          example: 9
+        type:
+          type: string
+          example: "home"
+        name:
+          type: string
+          example: "Home"
+      required:
+        - adriaId
+        - teleporterId
+        - type
+        - name
+      example:
+        adriaId: 7
+        teleporterId: 9
+        type: "home"
+        name: "Home"
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
