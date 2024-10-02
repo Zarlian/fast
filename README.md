@@ -25,8 +25,6 @@ Although this project was not primarily focused on programming, we were fortunat
 
 - **Frontend**
   - React: Developed a responsive and intuitive user interface.
-  - HTML5 and CSS3: For page structure and design.
-  - JavaScript: For dynamic functionality.
 
 - **Backend**
   - Java: Implemented the backend API to handle data operations.
