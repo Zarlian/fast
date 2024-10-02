@@ -1,0 +1,7 @@
+.idea
+package-lock.json
+node_modules
+.scannerwork
+.vscode
+coverage
+index.pb

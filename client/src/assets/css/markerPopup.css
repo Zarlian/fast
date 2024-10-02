@@ -1,0 +1,20 @@
+.mapboxgl-popup-close-button {
+    color: #ffffff; /* Set your desired text color */
+    border-radius: 50%; /* Optional: Set border-radius for a circular button */
+    padding: 8px; /* Optional: Adjust padding as needed */
+    font-size: 25px; /* Optional: Adjust font size as needed */
+    cursor: pointer;
+}
+
+
+.mapboxgl-popup-content {
+    box-shadow: none;
+    padding: 0;
+    border-radius: 10px;
+    border: 1px solid #001f25;
+}
+
+.mapboxgl-marker-friends {
+    /* Customize the appearance of "Friends" group markers */
+    background-color: red; /* Set your desired color */
+}
