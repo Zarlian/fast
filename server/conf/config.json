@@ -1,0 +1,14 @@
+{
+  "http": {
+    "port": 8080
+  },
+  "db" : {
+    "url": "jdbc:h2:./db-04",
+    "username": "",
+    "password": "",
+    "webconsole.port": 9000
+  },
+  "api" : {
+    "url": "https://project-2.ti.howest.be/monitor/apis/group-04"
+  }
+}
