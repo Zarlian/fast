@@ -25,10 +25,14 @@ Although this project was not primarily focused on programming, we were fortunat
 
 - **Frontend**
   - React: Developed a responsive and intuitive user interface.
+  - HTML5 and CSS3: For page structure and design.
+  - JavaScript: For dynamic functionality.
 
-- **Others**
-  - Prototype Demonstration: Showcased the teleportation system for potential investors.
+- **Backend**
+  - Java: Implemented the backend API to handle data operations.
+  - RESTful API: Facilitated communication between the frontend and backend.
 
 ## Lessons Learned
 
 This project helped me immerse myself in React’s component-based architecture and state management, which allowed me to build a responsive and intuitive user interface. Despite the challenge of learning React on the fly, it was an ideal opportunity to expand my skill set and push my boundaries as a developer. Ultimately, we successfully delivered a sleek and fully functional prototype that effectively demonstrated how users could navigate and control their teleportation experience through FAST.
+
